@@ -43,7 +43,7 @@ public class Retangle {
         return EdgeA * EdgeB;
     }
 
-    public void showInf() {
+    public void paint() {
         String str = String.format("Retangle     |%5s|%5.2f|%5.2f|%5.2f|%5.2f",
                      color, EdgeA, EdgeB, Premeter(), Area());
         System.out.println(str);
