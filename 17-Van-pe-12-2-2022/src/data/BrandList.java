@@ -3,9 +3,12 @@ package data;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
+import ui.Menu;
 import utils.Inputter;
 
 public class BrandList {
@@ -134,6 +137,55 @@ public class BrandList {
             brandList.get(pos).setPrice(price);
             System.out.println(" _Updating is successfull !!!");
             
+        }
+    }
+    
+    
+    //hiển thị danh sách brandList có đánh số
+    //gọi ref_getChoice để xin người dùng chọn và trả ra kết quả
+    public Brand getUserChoice(){
+        //hiển thị brandList như menu có số
+        int count = 1;
+        System.out.println("_____BrandList_____");
+        for (Brand brand : brandList) {
+            System.out.println(count + ". "+ brand);
+            count++;
+        }
+        //tạo menu để xài ref_getChoice
+        Menu<Brand> brandMenu = new Menu("brandListMenu");
+        return brandMenu.ref_getChoice(brandList); // thu thập lựa chọn và trả ra brand tương ứng
+       
+    }
+    public void searchBrand(){
+        String keyId = Inputter.getString("Input brand you wanna find", 
+                "that field is required");
+        int pos = this.searchID(keyId);//this ko ghi cug dc
+        if(pos == -1){
+            System.out.println("Not Found !!!");
+        }else{
+            System.out.println("Brand information ");
+            System.out.println(brandList);
+            
+            
+        }
+    }
+    
+    //hàm save file
+    public boolean saveToFile(String url){
+        File f = new File(url);
+        try {
+            OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(f));
+            for (Brand brand : brandList) {
+                writer.write(brand.toString());
+                writer.write("\n");
+            }
+            writer.flush();
+            
+            return true;
+            
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+            return false;
         }
     }
 
